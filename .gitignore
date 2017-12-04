@@ -19,17 +19,17 @@ $RECYCLE.BIN/
 
 # Working files
 *.txt
-*.pdf
+#*.pdf
 *.png
 *.kml
 *.csv
-*.kmz
+#*.kmz
 #*.mp4
 *.exe
 *.gif
 *.xlsx
 *.nc
-*.jpg
+#*.jpg
 
 # =========================
 # Operating System Files
