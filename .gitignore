@@ -24,7 +24,7 @@ $RECYCLE.BIN/
 *.kml
 *.csv
 *.kmz
-*.mp4
+#*.mp4
 *.exe
 *.gif
 *.xlsx
@@ -59,4 +59,3 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-Plate_Flexure.py
