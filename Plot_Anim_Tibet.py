@@ -4,7 +4,7 @@ Created on Tue Jan 24 11:29:59 2017
 
 Script to plot Lat Long data over a time interval.
 
-Made and currently set to plot volcanic data from North America.
+Made and currently set to plot volcanic data from Tibet
 
 @author: Kalkberg
 """
