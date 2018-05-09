@@ -17,6 +17,6 @@ Plot_Anim_Hexbin_median_Val_Tibet.py - Same as Plot_Anim_Hexbin_median_Val but c
 
 Plot_Anim_Tibet.py - Takes a csv of age, lat, and long data and makes an animation with a geographic basemap. Set for data from Tibet.
 
-Plot_Anim_Tibet_Colors.py - Creates an animation of point data on a map, animated by time. Has a colored legend to differentiate points for a different field.
+Plot_Anim_Tibet_Colors.py - Creates an animation of point data on a map, animated by time. Has a colored legend to differentiate points based on a field. Colors are set to fade over time.
 
 Point_Poly.py - Takes a list of polygons, and a list of data with min/max ages, and lat/long data. Then estimates frequency of samples in each polygon, using a Bayesean approach.
