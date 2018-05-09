@@ -13,6 +13,7 @@ Made and currently set to plot volcanic data from Tibet.
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import matplotlib.colors as colors
 from matplotlib.lines import Line2D
 from mpl_toolkits.basemap import Basemap
 import math
@@ -21,14 +22,15 @@ import os
 
 # Input paramaters
 data = 'Tibet_Chapman_Type.csv' # Data source
-output = 'Tibet_Igneous5' # File name of output
+output = 'Tibet_Igneous6' # File name of output
 age_min = 0 # Minimum age to plot
 age_max = 110 # Maximum age to plot
-fade_time = 5 # Number of Myr over which to fade symbols
-fade_steps = 5 # Number of colors to use in fading symbols
-fade_time_step = fade_time/fade_steps # Calculate time intervals for symbol fade
 step = 8 # Frames per Myr
 fps_mov = 16 # Fps of final video
+fade_time = 5 # Number of Myr over which to fade symbols
+fade_steps = step*fade_time # Number of colors to use in fading symbols
+fade_time_step = 1/step # Calculate time intervals for symbol fade
+# Note: Video works best when 1/step=fade_time_step, but all can be set manually
 tstart = 1 # Controlls how early to add points
 
 # Read in data, cut out headers and redistribute
@@ -66,14 +68,14 @@ m.drawparallels(np.arange(28.,40.,4.), linewidth=.75,
                 labels=[1, 1, 0, 0], color='0')
 m.drawmeridians(np.arange(78.,96.,4.), linewidth=.75, 
                 labels=[0, 0, 0, 1], color='0')
-blues = plt.get_cmap('Blues_r')
-reds = plt.get_cmap('Reds_r')
-greys = plt.get_cmap('Greys_r')
-legend_elements = [Line2D([0], [0], marker='o', color=blues(0), label='MgO>6',
-                          markerfacecolor=blues(0), markersize=3, linestyle='none'),
-                    Line2D([0], [0], marker='o', color=reds(0), label='MgO<6',
-                          markerfacecolor=reds(0), markersize=3, linestyle='none'),
-                    Line2D([0], [0], marker='o', color=greys(0), label='No Data',
+#blues = plt.get_cmap('Blues_r')
+#reds = plt.get_cmap('Reds_r')
+#greys = plt.get_cmap('Greys_r')
+legend_elements = [Line2D([0], [0], marker='o', color='b', label='MgO>6',
+                          markerfacecolor='b', markersize=3, linestyle='none'),
+                    Line2D([0], [0], marker='o', color='r', label='MgO<6',
+                          markerfacecolor='r', markersize=3, linestyle='none'),
+                    Line2D([0], [0], marker='o', color='k', label='No Data',
                           markerfacecolor='none', markersize=4, linestyle='none')]
 
 # Convert data to projection coordinates
@@ -127,23 +129,38 @@ for i in range(0,age_max*step,1):
                 age[j] > age_int + (k-1)*fade_time_step and math.isnan(MgO[j]))]
             
         # Plot points for time and color slice after catching empty lists
+#        if len(xb)>0:
+#            bpoints = m.scatter(xb, yb, marker='o', 
+#                                facecolor=blues(k/fade_steps), s=3)
+#        if len(xr)>0:
+#            rpoints = m.scatter(xr, yr, marker='o',
+#                                facecolor=reds(k/fade_steps), s=3)
+#        if len(xk)>0:
+#            kpoints = m.scatter(xk,yk,marker='o',s=4,
+#                                facecolor='none', lw=0.5, 
+#                                edgecolor=greys(k/fade_steps))
+        #When alpha=0, symbol is clear, when alpha=1 symbol is solid
+        #Alpha controlled by time since eruption
         if len(xb)>0:
-            bpoints = m.scatter(xb, yb, marker='o', 
-                                facecolor=blues(k/fade_steps), s=3)
+            bpoints = m.scatter(xb, yb, marker='o', color='b', 
+                                alpha=1-(k/fade_steps), s=3)
         if len(xr)>0:
-            rpoints = m.scatter(xr, yr, marker='o',
-                                facecolor=reds(k/fade_steps), s=3)
+            rpoints = m.scatter(xr, yr, marker='o', color='r',
+                                alpha=1-(k/fade_steps), s=3)
+        kcolor = colors.colorConverter.to_rgba('k', alpha=1-(k/fade_steps))
         if len(xk)>0:
             kpoints = m.scatter(xk,yk,marker='o',s=4,
                                 facecolor='none', lw=0.5, 
-                                edgecolor=greys(k/fade_steps))
+                                edgecolor=kcolor)
 
     # Make text box, legend, and neaten things up
     time_text = ax.text(0.035, 0.035, 'Age = %s Ma' %int(age_int), 
                     transform=ax.transAxes, backgroundcolor='w')
-    legend = plt.legend(handles=legend_elements, loc='upper center', 
-                        bbox_to_anchor=(0.5, -.05),ncol=3, fancybox=True,
-                        fontsize=9)
+#    legend = plt.legend(handles=legend_elements, loc='upper center', 
+#                        bbox_to_anchor=(0.5, -.05),ncol=3, fancybox=True,
+#                        fontsize=9)
+    legend = plt.legend(handles=legend_elements, loc='upper left', 
+                        fancybox=True, fontsize=9)
     plt.tight_layout()
                                          
     # Save plot to name padded to five digits and save everything
