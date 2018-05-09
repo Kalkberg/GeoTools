@@ -22,9 +22,9 @@ import os
 
 # Input paramaters
 data = 'Tibet_Chapman_Type.csv' # Data source
-output = 'Tibet_Igneous6' # File name of output
+output = 'Tibet_Igneous8' # File name of output
 age_min = 0 # Minimum age to plot
-age_max = 110 # Maximum age to plot
+age_max = 80 # Maximum age to plot
 step = 8 # Frames per Myr
 fps_mov = 16 # Fps of final video
 fade_time = 5 # Number of Myr over which to fade symbols
@@ -68,9 +68,6 @@ m.drawparallels(np.arange(28.,40.,4.), linewidth=.75,
                 labels=[1, 1, 0, 0], color='0')
 m.drawmeridians(np.arange(78.,96.,4.), linewidth=.75, 
                 labels=[0, 0, 0, 1], color='0')
-#blues = plt.get_cmap('Blues_r')
-#reds = plt.get_cmap('Reds_r')
-#greys = plt.get_cmap('Greys_r')
 legend_elements = [Line2D([0], [0], marker='o', color='b', label='MgO>6',
                           markerfacecolor='b', markersize=3, linestyle='none'),
                     Line2D([0], [0], marker='o', color='r', label='MgO<6',
