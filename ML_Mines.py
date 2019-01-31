@@ -19,6 +19,12 @@ mines = pandas.read_csv('Mines_Geo_Metals.csv')
 data=mines[['DLAT','DLONG','Detach_Dis','Dyke_Dist','Thrust_Dis','Normal_Dis',
             'SS_Dist','Fault_Dist']].values
 
+units=list(set(mines['Orig_Label'].values))
+
+#for i in range(len(units)-1):
+#    unit=np.asarray([1 if x==True else 0 for x in mines['Orig_Label']==units[i]])
+#    data=np.append(data,np.asarray(unit)[:,None],axis=1)
+
 labels=np.asarray([1 if x=='Y' else 0 for x in mines['Gold'].values])
 
 #labels=mines['Gold'].values
